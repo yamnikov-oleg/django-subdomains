@@ -1,15 +1,10 @@
 language: python
 python:
-  - "2.6"
   - "2.7"
-  - "3.4"
   - "3.5"
   - "3.6"
+  - "3.7"
 env:
-  - DJANGO='Django==1.4.*'
-  - DJANGO='Django==1.5.*'
-  - DJANGO='Django==1.6.*'
-  - DJANGO='Django==1.7.*'
   - DJANGO='Django==1.8.*'
   - DJANGO='Django==1.9.*'
   - DJANGO='Django==1.10.*'
@@ -18,42 +13,11 @@ env:
   - DJANGO='Django==2.1.*'
 matrix:
   exclude:
-    # Django >= 1.7 does not support Python 2.6
-    - python: "2.6"
-      env: DJANGO='Django==1.7.*'
-    - python: "2.6"
-      env: DJANGO='Django==1.8.*'
-    - python: "2.6"
-      env: DJANGO='Django==1.9.*'
-    - python: "2.6"
-      env: DJANGO='Django==1.10.*'
-    - python: "2.6"
-      env: DJANGO='Django==1.11.*'
-    - python: "2.6"
-      env: DJANGO='Django==2.0.*'
-    - python: "2.6"
-      env: DJANGO='Django==2.1.*'
     # Django >= 2 does not support Python 2.7
     - python: "2.7"
       env: DJANGO='Django==2.0.*'
     - python: "2.7"
       env: DJANGO='Django==2.1.*'
-    # Django < 1.7 does not support Python 3.4
-    - python: "3.4"
-      env: DJANGO='Django==1.4.*'
-    - python: "3.4"
-      env: DJANGO='Django==1.5.*'
-    - python: "3.4"
-      env: DJANGO='Django==1.6.*'
-    # Django < 1.8 does not support Python 3.5
-    - python: "3.5"
-      env: DJANGO='Django==1.4.*'
-    - python: "3.5"
-      env: DJANGO='Django==1.5.*'
-    - python: "3.5"
-      env: DJANGO='Django==1.6.*'
-    - python: "3.5"
-      env: DJANGO='Django==1.7.*'
 install:
   - pip install $DJANGO
 script:
