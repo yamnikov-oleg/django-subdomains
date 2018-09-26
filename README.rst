@@ -9,8 +9,8 @@ Full documentation can be found here: http://django-subdomains.readthedocs.org/
 Build Status
 ------------
 
-.. image:: https://secure.travis-ci.org/whyfly/django-subdomains.png?branch=master
-   :target: http://travis-ci.org/whyfly/django-subdomains
+.. image:: https://travis-ci.org/whyflyru/django-subdomains.svg?branch=master
+   :target: https://travis-ci.org/whyflyru/django-subdomains
 
 Tested on Python 2.6, 2.7, 3.4, 3.5, 3.6, 3.7 on their supported Django versions from
 1.4 through 2.1.
