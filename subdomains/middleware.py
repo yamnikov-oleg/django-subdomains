@@ -2,6 +2,11 @@ import operator
 import logging
 import re
 
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:  # Django < 1.10
+    MiddlewareMixin = object
+
 from django.conf import settings
 from django.utils.cache import patch_vary_headers
 
@@ -11,10 +16,10 @@ from subdomains.utils import get_domain
 logger = logging.getLogger(__name__)
 lower = operator.methodcaller('lower')
 
-UNSET = object()
+UNSET = MiddlewareMixin()
 
 
-class SubdomainMiddleware(object):
+class SubdomainMiddleware(MiddlewareMixin):
     """
     A middleware class that adds a ``subdomain`` attribute to the current request.
     """
@@ -29,8 +34,7 @@ class SubdomainMiddleware(object):
         """
         Adds a ``subdomain`` attribute to the ``request`` parameter.
         """
-        domain, host = map(lower,
-            (self.get_domain_for_request(request), request.get_host()))
+        domain, host = map(lower, (self.get_domain_for_request(request), request.get_host()))
 
         pattern = r'^(?:(?P<subdomain>.*?)\.)?%s(?::.*)?$' % re.escape(domain)
         matches = re.match(pattern, host)
@@ -39,9 +43,11 @@ class SubdomainMiddleware(object):
             request.subdomain = matches.group('subdomain')
         else:
             request.subdomain = None
-            logger.warning('The host %s does not belong to the domain %s, '
+            logger.warning(
+                'The host %s does not belong to the domain %s, '
                 'unable to identify the subdomain for this request',
-                request.get_host(), domain)
+                request.get_host(), domain
+            )
 
 
 class SubdomainURLRoutingMiddleware(SubdomainMiddleware):
@@ -62,7 +68,7 @@ class SubdomainURLRoutingMiddleware(SubdomainMiddleware):
             urlconf = settings.SUBDOMAIN_URLCONFS.get(subdomain)
             if urlconf is not None:
                 logger.debug("Using urlconf %s for subdomain: %s",
-                    repr(urlconf), repr(subdomain))
+                             repr(urlconf), repr(subdomain))
                 request.urlconf = urlconf
 
     def process_response(self, request, response):

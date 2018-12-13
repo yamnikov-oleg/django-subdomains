@@ -9,6 +9,7 @@ def get_version():
     from subdomains import __version__
     return '.'.join(map(str, __version__))
 
+
 try:
     version = get_version()
 except ImportError:
@@ -19,13 +20,14 @@ except ImportError:
 install_requires = ['django']
 tests_require = install_requires + ['mock']
 
-setup(name='django-subdomains',
+setup(
+    name='django-subdomains',
     version=version,
     url='http://github.com/tkaemming/django-subdomains/',
     author='ted kaemming',
     author_email='ted@kaemming.com',
     description="Subdomain tools for the Django framework, including "
-        "subdomain-based URL routing.",
+                "subdomain-based URL routing.",
     packages=find_packages(),
     include_package_data=True,
     install_requires=install_requires,

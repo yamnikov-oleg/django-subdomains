@@ -1,6 +1,10 @@
 from django.conf import settings
 
 if not settings.configured:
+    MIDDLEWARES = (
+        'django.middleware.common.CommonMiddleware',
+        'subdomains.middleware.SubdomainURLRoutingMiddleware',
+    )
     settings.configure(
         INSTALLED_APPS=(
             'django.contrib.sites',
@@ -13,16 +17,16 @@ if not settings.configured:
             },
         },
         SITE_ID=1,
-        MIDDLEWARE_CLASSES=(
-            'django.middleware.common.CommonMiddleware',
-            'subdomains.middleware.SubdomainURLRoutingMiddleware',
-        ),
+        MIDDLEWARE_CLASSES=MIDDLEWARES,
+        MIDDLEWARE=MIDDLEWARES,
         TEMPLATES=[
             {
                 'BACKEND': 'django.template.backends.django.DjangoTemplates',
             },
         ],
-        ALLOWED_HOSTS="*"
+        ALLOWED_HOSTS=[
+            '.example.com',
+        ],
     )
 
 

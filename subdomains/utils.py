@@ -23,10 +23,11 @@ def current_site_domain():
     return domain
 
 
-if hasattr(settings, 'SUBDOMAINS_DOMAIN') and settings.SUBDOMAINS_DOMAIN:
-    get_domain = lambda: settings.SUBDOMAINS_DOMAIN
-else:
-    get_domain = current_site_domain
+def get_domain():
+    if hasattr(settings, 'SUBDOMAINS_DOMAIN') and settings.SUBDOMAINS_DOMAIN:
+        return settings.SUBDOMAINS_DOMAIN
+    else:
+        return current_site_domain()
 
 
 def urljoin(domain, path=None, scheme=None):
@@ -45,8 +46,7 @@ def urljoin(domain, path=None, scheme=None):
     return urlunparse((scheme, domain, path or '', None, None, None))
 
 
-def reverse(viewname, subdomain=None, scheme=None, args=None, kwargs=None,
-        current_app=None):
+def reverse(viewname, subdomain=None, scheme=None, args=None, kwargs=None, current_app=None):
     """
     Reverses a URL from the given parameters, in a similar fashion to
     :meth:`django.core.urlresolvers.reverse`.
@@ -64,8 +64,7 @@ def reverse(viewname, subdomain=None, scheme=None, args=None, kwargs=None,
     if subdomain:
         domain = '%s.%s' % (subdomain, domain)
 
-    path = simple_reverse(viewname, urlconf=urlconf, args=args, kwargs=kwargs,
-        current_app=current_app)
+    path = simple_reverse(viewname, urlconf=urlconf, args=args, kwargs=kwargs, current_app=current_app)
     return urljoin(domain, path, scheme=scheme)
 
 
