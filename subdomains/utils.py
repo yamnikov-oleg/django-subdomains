@@ -1,9 +1,5 @@
 import functools
-try:
-    from urlparse import urlunparse
-except ImportError:
-    from urllib.parse import urlunparse
-
+from urllib.parse import urlunparse
 from django.conf import settings
 try:
     from django.core.urlresolvers import reverse as simple_reverse
@@ -49,7 +45,7 @@ def urljoin(domain, path=None, scheme=None):
 def reverse(viewname, subdomain=None, scheme=None, args=None, kwargs=None, current_app=None):
     """
     Reverses a URL from the given parameters, in a similar fashion to
-    :meth:`django.core.urlresolvers.reverse`.
+    :meth:`from django.urls import reverse`.
 
     :param viewname: the name of URL
     :param subdomain: the subdomain to use for URL reversing

@@ -1,5 +1,8 @@
 import functools
-import mock
+try:
+    from unittest import mock
+except ImportError:  # Python 2
+    import mock
 import warnings
 try:
     import urlparse
