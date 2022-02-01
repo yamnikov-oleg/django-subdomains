@@ -1,11 +1,34 @@
 language: python
-python:
-  - "3.6"
-  - "3.7"
-env:
-  - DJANGO='Django==2.1.*'
-  - DJANGO='Django==2.2.*'
-install:
-  - pip install $DJANGO
+matrix:
+  include:
+    - python: 3.6
+      env: TOXENV=py36-django111
+    - python: 3.6
+      env: TOXENV=py36-django20
+    - python: 3.6
+      env: TOXENV=py36-django21
+    - python: 3.6
+      env: TOXENV=py36-django22
+    - python: 3.7
+      env: TOXENV=py37-django20
+    - python: 3.7
+      env: TOXENV=py37-django21
+    - python: 3.7
+      env: TOXENV=py37-django22
+    - python: 3.7
+      env: TOXENV=py37-django31
+    - python: 3.7
+      env: TOXENV=py37-django32
+    - python: 3.8
+      env: TOXENV=py38-django21
+    - python: 3.8
+      env: TOXENV=py38-django22
+    - python: 3.8
+      env: TOXENV=py38-django31
+    - python: 3.8
+      env: TOXENV=py38-django32
+
+before_install:
+  - sudo pip install tox
 script:
-  - make test
+  - tox -e $TOXENV
